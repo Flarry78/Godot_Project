@@ -1,6 +1,12 @@
 [gd_scene format=3 uid="uid://da38shj8hewxq"]
 
 [ext_resource type="Script" uid="uid://c4dxspblobfuv" path="res://Main/mainknoten.gd" id="1_h5i2h"]
+[ext_resource type="PackedScene" uid="uid://dwmxa5eyxcepq" path="res://Hud/hudingame.tscn" id="2_3fa56"]
+[ext_resource type="PackedScene" uid="uid://ci35a8lxql4g6" path="res://Maps/map_one.tscn" id="2_tptql"]
 
 [node name="Mainknoten" type="Node2D" unique_id=599499416]
 script = ExtResource("1_h5i2h")
+
+[node name="Hudingame" parent="." unique_id=1188638444 instance=ExtResource("2_3fa56")]
+
+[node name="Map_one" parent="." unique_id=2045291311 instance=ExtResource("2_tptql")]
