@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://c2pbwt6k451hl"]
+
+[ext_resource type="Texture2D" uid="uid://iurgml2fwx33" path="res://assets/sheet.png" id="1_2m67k"]
+[ext_resource type="Script" uid="uid://68bq1i2qaw2s" path="res://Tower/tower_one.gd" id="1_y8n6u"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vypuj"]
+atlas = ExtResource("1_2m67k")
+region = Rect2(240, 16, 16, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vypuj"]
+radius = 57.0
+
+[node name="tower_one" type="Node2D" unique_id=1584887137]
+script = ExtResource("1_y8n6u")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=391783663]
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_vypuj")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=168389390]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1674055050]
+shape = SubResource("CircleShape2D_vypuj")
