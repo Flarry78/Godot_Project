@@ -1,9 +1,18 @@
 extends Node2D
 
+### Gegner
+@onready var enemyebene: Node2D = $enemyebene
+@onready var spawntimer: Timer = $spawntimer
+
+var aktivepfade : Array[PathFollow2D] = []
+
+### ---------------------------------
+
 ### Maps und Baunzonen und Pfade
 @onready var mapebene: Node2D = $mapebene
 var baumap : TileMapLayer = null
 var baunummer : int = 1
+var allewege : Array[Node] = []
 
 
 ### ----------------------------------
@@ -29,7 +38,7 @@ var darfbauen : bool = false
 ### -----------------------------------
 
 func _ready() -> void:
-	
+	randomize()
 	lademap()
 	
 	
@@ -42,6 +51,7 @@ func lademap():
 	var loading = load(randommap)
 	var erstellemap = loading.instantiate()
 	mapebene.add_child(erstellemap)
+	allewege = erstellemap.wege.get_children()
 	baumap = erstellemap.flache
 	
 	pass
@@ -49,10 +59,12 @@ func lademap():
 
 func _process(delta: float) -> void:
 	
-	
 	datenanzeige()
 	
 	ghosttower()
+	
+	pfadelaufen(delta)
+	
 	
 	pass
 
@@ -69,6 +81,40 @@ func datenanzeige() -> void:
 	nodes.text = "ALLNODES " + str(get_tree().get_node_count())
 	
 	pass
+
+
+func pfadelaufen(delta):
+	
+	var wegdamit : Array[PathFollow2D] = []
+	
+	for all in aktivepfade:
+		if is_instance_valid(all):
+			var pfadkind = all.get_child(0)
+			if is_instance_valid(pfadkind):
+				all.progress = all.progress + (Globalknoten.basespeed + pfadkind.speed) * delta
+				if all.progress_ratio >= 0.99:
+					if is_instance_valid(pfadkind):
+						pfadkind.queue_free()
+						wegdamit.append(all)
+	
+	for wech in wegdamit:
+		aktivepfade.erase(wech)
+		wech.queue_free()
+	
+	
+	pass
+
+
+func getpfad() -> PathFollow2D:
+	
+	var rndpfad = allewege.pick_random()
+	var neuerpfad : PathFollow2D = PathFollow2D.new()
+	rndpfad.add_child(neuerpfad)
+	neuerpfad.rotates = false
+	neuerpfad.rotation = 0
+	
+	return neuerpfad
+
 
 func gettower():
 	
@@ -127,6 +173,28 @@ func ghosttower():
 	pass
 
 
+func getgegner() -> Node2D:
+	
+	var rndenemy : String = Globalknoten.enemypool.pick_random()
+	var erstellenemy : PackedScene = load(rndenemy)
+	var ladeenemy : Node2D = erstellenemy.instantiate()
+	
+	return ladeenemy
+
+
+func spawnenemy():
+	
+	var derpfad : PathFollow2D = getpfad()
+	var derenemy : Node2D = getgegner()
+	
+	derpfad.add_child(derenemy)
+	aktivepfade.append(derpfad)
+	
+	
+	pass
+
+
+
 
 func _input(event: InputEvent) -> void:
 	
@@ -140,5 +208,16 @@ func _input(event: InputEvent) -> void:
 		elif ghostaktiv == true and darfbauen == true:
 			ghostaktiv = false
 			bautower()
+	
+	if event.is_action_pressed("spawn"):
+		spawntimer.start()
+	
+	pass
+
+
+func _on_spawntimer_timeout() -> void:
+	
+	spawnenemy()
+	
 	
 	pass

@@ -12,6 +12,8 @@ script = ExtResource("1_h5i2h")
 
 [node name="towerebene" type="Node2D" parent="." unique_id=2143392968]
 
+[node name="enemyebene" type="Node2D" parent="." unique_id=1954642877]
+
 [node name="leistung" type="Control" parent="." unique_id=1770194593]
 layout_mode = 3
 anchors_preset = 0
@@ -50,3 +52,11 @@ offset_left = -1.0
 offset_top = 42.0
 offset_right = -1.0000038
 offset_bottom = 42.0
+
+[node name="spawntimer" type="Timer" parent="." unique_id=1122871176]
+wait_time = 0.3
+
+[node name="kiste" type="Node2D" parent="." unique_id=1830443793]
+z_index = 1
+
+[connection signal="timeout" from="spawntimer" to="." method="_on_spawntimer_timeout"]

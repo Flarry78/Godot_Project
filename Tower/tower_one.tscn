@@ -18,6 +18,15 @@ scale = Vector2(2, 2)
 texture = SubResource("AtlasTexture_vypuj")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=168389390]
+collision_mask = 2
+monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1674055050]
 shape = SubResource("CircleShape2D_vypuj")
+
+[node name="feuerrate" type="Timer" parent="." unique_id=984423353]
+wait_time = 0.6
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
+[connection signal="timeout" from="feuerrate" to="." method="_on_feuerrate_timeout"]
