@@ -54,7 +54,7 @@ offset_right = -1.0000038
 offset_bottom = 42.0
 
 [node name="spawntimer" type="Timer" parent="." unique_id=1122871176]
-wait_time = 0.3
+wait_time = 1.4
 
 [node name="kiste" type="Node2D" parent="." unique_id=1830443793]
 z_index = 1

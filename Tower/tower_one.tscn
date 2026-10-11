@@ -8,7 +8,7 @@ atlas = ExtResource("1_2m67k")
 region = Rect2(240, 16, 16, 16)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vypuj"]
-radius = 57.0
+radius = 101.04455
 
 [node name="tower_one" type="Node2D" unique_id=1584887137]
 script = ExtResource("1_y8n6u")
@@ -25,7 +25,7 @@ monitorable = false
 shape = SubResource("CircleShape2D_vypuj")
 
 [node name="feuerrate" type="Timer" parent="." unique_id=984423353]
-wait_time = 0.6
+wait_time = 0.5
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]

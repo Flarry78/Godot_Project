@@ -15,3 +15,12 @@
 - turm hat jetzt geschosse die auf den ersten gegner fliegen
 - erste gegner die die pfade langlaufen
 - timer startet und lässt gegner mit zuäffligen pfaden spawnen
+
+
+## 2026-10-11
+
+- einen ghosttower eingefügt
+- alle bebaubaren tiles in ein dictionary geladen
+- ghosttower wird grün oder rot jenachdem ob gebaut werden darf
+- gebaute türme werden in ein 2tes dictionary geladen und die plätze belegt
+- die schießmechanik vom tower überarbeitet

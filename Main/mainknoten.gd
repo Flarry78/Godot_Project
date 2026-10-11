@@ -11,18 +11,18 @@ var aktivepfade : Array[PathFollow2D] = []
 ### Maps und Baunzonen und Pfade
 @onready var mapebene: Node2D = $mapebene
 var baumap : TileMapLayer = null
-var baunummer : int = 1
+var baunummer : int = 2
 var allewege : Array[Node] = []
-
+var alltiles : Dictionary = {}
+var belegtetiles : Dictionary = {}
 
 ### ----------------------------------
 
 ### Tower und bauen
 @onready var towerebene: Node2D = $towerebene
 
-var bebauteplatze : Array[Vector2i] = []
-
 var holdghost : Node2D = null
+var ghostzelle : Vector2i = Vector2i()
 
 var ghostaktiv : bool = false
 var ambauen : bool = false
@@ -53,6 +53,17 @@ func lademap():
 	mapebene.add_child(erstellemap)
 	allewege = erstellemap.wege.get_children()
 	baumap = erstellemap.flache
+	baugrid_aufbauen()
+	
+	pass
+
+
+func baugrid_aufbauen() -> void:
+	
+	alltiles.clear()
+	belegtetiles.clear()
+	for zelle in baumap.get_used_cells_by_id(2):
+		alltiles[zelle] = true
 	
 	pass
 
@@ -126,20 +137,14 @@ func gettower():
 	pass
 
 func bautower():
+	 
+	for platz in holdghost.towergrose:
+		platz += ghostzelle
+		belegtetiles[platz] = holdghost
 	
-	var baucopy : Node2D = holdghost.duplicate()
-	towerebene.add_child(baucopy)
+	holdghost.modulate = Color(1.0, 1.0, 1.0, 1.0)
+	holdghost = null
 	
-	var mouse = get_global_mouse_position()
-	var tile : Vector2i = baumap.local_to_map(mouse)
-	
-	for grose in holdghost.towergrose:
-		grose += tile
-		bebauteplatze.append(grose)
-	
-	holdghost.queue_free()
-	
-	print(bebauteplatze)
 	
 	pass
 
@@ -148,27 +153,26 @@ func ghosttower():
 	
 	if ghostaktiv == false:
 		return
-	var mouse = get_global_mouse_position()
+	var mouse = baumap.get_local_mouse_position()
 	var tile : Vector2i = baumap.local_to_map(mouse)
+	ghostzelle = tile
 	
-	var tilenummer = baumap.get_cell_source_id(tile)
-	
-	
-	var belegt : Array[Vector2i] = []
-	
-	for grose in holdghost.towergrose:
-		grose += tile
-		belegt.append(grose)
-	var fastmitte : Vector2 = baumap.map_to_local(tile)
-	var mitte : Vector2 = fastmitte + Vector2(8,8)
+	var startgrose : Vector2 = baumap.map_to_local(tile)
+	var mitte : Vector2 = startgrose + Vector2(8,8)
 	holdghost.global_position = mitte
 	
+	darfbauen = true
 	
-	if tilenummer == 2:
-		darfbauen = true
+	for platz in holdghost.towergrose:
+		platz += tile
+		if not alltiles.has(platz) or belegtetiles.has(platz):
+			darfbauen = false
+			break
+	
+	if darfbauen:
+		holdghost.modulate = Color(0.0, 1.0, 0.0, 0.392)
 	else:
-		darfbauen = false
-	
+		holdghost.modulate = Color(1.0, 0.0, 0.0, 0.392)
 	
 	pass
 

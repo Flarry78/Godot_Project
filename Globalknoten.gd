@@ -1,6 +1,7 @@
 extends Node
 
-### schüsse der türme verbessern dasd beim eintreten nicht der timer neu gestarte wird etc 
+### neuen tower einfügen mit verschiedener grose
+### 2te map auch
 ### dmg einfügen und gegner versvhwinden lassen
 
 
