@@ -40,8 +40,8 @@ var darfbauen : bool = false
 func _ready() -> void:
 	randomize()
 	lademap()
-	
-	
+	Globalknoten.starttheround.connect(roundstart)
+	Globalknoten.turmwegstart.connect(machweg)
 	pass
 
 
@@ -54,6 +54,31 @@ func lademap():
 	allewege = erstellemap.wege.get_children()
 	baumap = erstellemap.flache
 	baugrid_aufbauen()
+	
+	pass
+
+func roundstart():
+	
+	if Globalknoten.aktuelle_runde == Globalknoten.maxrunde:
+		Globalknoten.finalerunde = true
+		finale()
+		return
+	
+	Globalknoten.rundelauft = true
+	Globalknoten.gegnerkommen = true
+	spawntimer.start()
+	Globalknoten.bauphase = false
+	
+	
+	pass
+
+func finale():
+	
+	print("hier kommt das finale")
+	Globalknoten.rundelauft = true
+	Globalknoten.gegnerkommen = true
+	spawntimer.start()
+	Globalknoten.bauphase = false
 	
 	pass
 
@@ -76,9 +101,20 @@ func _process(delta: float) -> void:
 	
 	pfadelaufen(delta)
 	
+	beenderunde()
+	
 	
 	pass
 
+func machweg():
+	
+	ghostaktiv = false
+	if holdghost != null:
+		holdghost.queue_free()
+		holdghost = null
+	
+	
+	pass
 
 func datenanzeige() -> void:
 	
@@ -93,6 +129,24 @@ func datenanzeige() -> void:
 	
 	pass
 
+func beenderunde():
+	
+	if Globalknoten.rundelauft == false:
+		return
+	
+	if Globalknoten.gegnerkommen == true:
+		return
+	
+	if aktivepfade.is_empty():
+		Globalknoten.aktuellegegner = 0
+		Globalknoten.rundelauft = false
+		Globalknoten.aktuelle_runde += 1
+		Globalknoten.emit_signal("upthud")
+		Globalknoten.bauphase = true
+	
+	pass
+
+
 
 func pfadelaufen(delta):
 	
@@ -100,13 +154,16 @@ func pfadelaufen(delta):
 	
 	for all in aktivepfade:
 		if is_instance_valid(all):
-			var pfadkind = all.get_child(0)
-			if is_instance_valid(pfadkind):
-				all.progress = all.progress + (Globalknoten.basespeed + pfadkind.speed) * delta
-				if all.progress_ratio >= 0.99:
-					if is_instance_valid(pfadkind):
-						pfadkind.queue_free()
-						wegdamit.append(all)
+			if all.get_child_count() > 0:
+				var pfadkind = all.get_child(0)
+				if is_instance_valid(pfadkind):
+					all.progress = all.progress + (Globalknoten.basespeed + pfadkind.speed) * delta
+					if all.progress_ratio >= 0.99:
+						if is_instance_valid(pfadkind):
+							pfadkind.queue_free()
+							wegdamit.append(all)
+			else:
+				wegdamit.append(all)
 	
 	for wech in wegdamit:
 		aktivepfade.erase(wech)
@@ -153,13 +210,20 @@ func ghosttower():
 	
 	if ghostaktiv == false:
 		return
-	var mouse = baumap.get_local_mouse_position()
+	var mouse = baumap.get_global_mouse_position()
 	var tile : Vector2i = baumap.local_to_map(mouse)
 	ghostzelle = tile
 	
-	var startgrose : Vector2 = baumap.map_to_local(tile)
-	var mitte : Vector2 = startgrose + Vector2(8,8)
-	holdghost.global_position = mitte
+	var center_sum = Vector2.ZERO
+	var count = 0
+	
+	for offset in holdghost.towergrose:
+		var current_tile = tile + offset
+		center_sum += baumap.map_to_local(current_tile)
+		count += 1
+		
+	var mitte_local = center_sum / count if count > 0 else baumap.map_to_local(tile)
+	holdghost.global_position = baumap.to_global(mitte_local)
 	
 	darfbauen = true
 	
@@ -194,10 +258,7 @@ func spawnenemy():
 	derpfad.add_child(derenemy)
 	aktivepfade.append(derpfad)
 	
-	
 	pass
-
-
 
 
 func _input(event: InputEvent) -> void:
@@ -206,22 +267,25 @@ func _input(event: InputEvent) -> void:
 		get_tree().quit()
 	
 	if event.is_action_pressed("bauen"):
-		if ghostaktiv == false:
+		if Globalknoten.bauphase == false:
+			return
+		elif ghostaktiv == false:
 			gettower()
 			ghostaktiv = true
 		elif ghostaktiv == true and darfbauen == true:
 			ghostaktiv = false
 			bautower()
 	
-	if event.is_action_pressed("spawn"):
-		spawntimer.start()
-	
 	pass
 
 
 func _on_spawntimer_timeout() -> void:
 	
-	spawnenemy()
-	
+	if Globalknoten.aktuellegegner < Globalknoten.maxgegneranzahl:
+		spawnenemy()
+		Globalknoten.aktuellegegner += 1
+	else:
+		spawntimer.stop()
+		Globalknoten.gegnerkommen = false
 	
 	pass

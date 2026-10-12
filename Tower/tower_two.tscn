@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://b3ikxybyi01qv"]
+
+[ext_resource type="Script" uid="uid://c6ljwdfpyr3tl" path="res://Tower/tower_two.gd" id="1_qsojd"]
+[ext_resource type="Texture2D" uid="uid://iurgml2fwx33" path="res://assets/sheet.png" id="1_rupfi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vypuj"]
+atlas = ExtResource("1_rupfi")
+region = Rect2(256, 0, 32, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wqdcs"]
+radius = 75.026665
+
+[node name="tower_two" type="Node2D" unique_id=381069502]
+script = ExtResource("1_qsojd")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=691506224]
+texture = SubResource("AtlasTexture_vypuj")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1254715807]
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=322694195]
+shape = SubResource("CircleShape2D_wqdcs")
+
+[node name="feuerrate" type="Timer" parent="." unique_id=1265381040]
+wait_time = 0.4
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
+[connection signal="timeout" from="feuerrate" to="." method="_on_feuerrate_timeout"]

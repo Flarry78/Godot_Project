@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://w28w5cwkkalt"]
+
+[ext_resource type="Script" uid="uid://dqawiv6ssy5xn" path="res://Bullets/bankschuss.gd" id="1_4quxd"]
+[ext_resource type="Texture2D" uid="uid://c2beamv4xvlvy" path="res://assets/bankschuss.png" id="1_d2t4i"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ubnmt"]
+radius = 4.0
+
+[node name="bankschuss" type="Area2D" unique_id=556099834]
+collision_layer = 4
+collision_mask = 2
+monitorable = false
+script = ExtResource("1_4quxd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=34304150]
+shape = SubResource("CircleShape2D_ubnmt")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1863459365]
+texture = ExtResource("1_d2t4i")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=2027617062]
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

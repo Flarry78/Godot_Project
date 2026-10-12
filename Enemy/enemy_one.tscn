@@ -5,6 +5,12 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vypuj"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e7r8p"]
+bg_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_81som"]
+bg_color = Color(0, 1, 0, 1)
+
 [node name="enemy_one" type="Node2D" unique_id=667666750]
 script = ExtResource("1_4252m")
 
@@ -18,3 +24,20 @@ monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=347780922]
 shape = SubResource("CircleShape2D_vypuj")
+
+[node name="lifebar" type="ProgressBar" parent="." unique_id=2121454443]
+z_index = 2
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -18.0
+offset_top = -20.0
+offset_right = 18.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/background = SubResource("StyleBoxFlat_e7r8p")
+theme_override_styles/fill = SubResource("StyleBoxFlat_81som")
+show_percentage = false

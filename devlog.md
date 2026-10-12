@@ -24,3 +24,14 @@
 - ghosttower wird grün oder rot jenachdem ob gebaut werden darf
 - gebaute türme werden in ein 2tes dictionary geladen und die plätze belegt
 - die schießmechanik vom tower überarbeitet
+
+
+## 2026-10-12
+
+- 2ten tower ertsellt
+- 2te map erstell
+- tower und geschosse haben jetzt damage
+- gegner haben leben und verlieren das uch und wenn null dann verschwinden sie
+- pfade werden jegzt ordentlich entfernt wenn fertig gelaufen oder keine gegner mehr dran gebunden sind
+- leben und rundenanzahl eingefügt
+- rundenphase und bauphase getrennt und wann kein gegner merh am leben ist
