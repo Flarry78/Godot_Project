@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://bto1msf7gd3xj"]
+
+[ext_resource type="Script" uid="uid://dh5d4w7fq47eq" path="res://Hud/karte.gd" id="1_7rbiu"]
+[ext_resource type="Texture2D" uid="uid://dkwqvj71vlkb6" path="res://assets/icon.svg" id="2_pq2dy"]
+
+[node name="karte" type="Control" unique_id=1086450552]
+layout_mode = 3
+anchor_right = 0.23700002
+anchor_bottom = 0.61700004
+offset_right = 0.31999207
+offset_bottom = -0.120010376
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7rbiu")
+
+[node name="k_rechts" type="ColorRect" parent="." unique_id=1228309317]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.7058824, 0.7058824, 0.7058824, 1)
+
+[node name="k_links" type="ColorRect" parent="." unique_id=1523413107]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_vertical = 2
+
+[node name="kartenbild" type="TextureRect" parent="." unique_id=20536184]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.18400002
+anchor_top = 0.072000004
+anchor_right = 0.81600004
+anchor_bottom = 0.38300002
+offset_left = 0.03199768
+offset_top = 0.01599884
+offset_right = -0.03200531
+offset_bottom = -0.026000977
+grow_horizontal = 2
+texture = ExtResource("2_pq2dy")
+expand_mode = 1
+
+[node name="textfeld" type="ColorRect" parent="." unique_id=1753442794]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.079
+anchor_top = 0.40100002
+anchor_right = 0.92100006
+anchor_bottom = 0.95000005
+offset_left = -0.008000374
+offset_top = -0.022003174
+offset_right = 0.0079956055
+offset_bottom = 0.099990845
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.9192522, 0.9192523, 0.9192521, 1)
+
+[node name="kartentext" type="RichTextLabel" parent="textfeld" unique_id=1196574754]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 8
+text = "dwadwad
+adad
+awdwdwd
+dawdwa
+dad"
+
+[node name="Button" type="Button" parent="." unique_id=651635798]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+flat = true
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

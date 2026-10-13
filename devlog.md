@@ -35,3 +35,10 @@
 - pfade werden jegzt ordentlich entfernt wenn fertig gelaufen oder keine gegner mehr dran gebunden sind
 - leben und rundenanzahl eingefügt
 - rundenphase und bauphase getrennt und wann kein gegner merh am leben ist
+
+
+## 2026-10-13
+
+- rundenphase und finale phase sollte fehlerfrei funktionieren
+- kartenvorlage erstellt und kartenauswahl
+- bei leben verloren und spiel pausiert

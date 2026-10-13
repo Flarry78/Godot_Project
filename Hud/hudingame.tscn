@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dwmxa5eyxcepq"]
 
 [ext_resource type="Script" uid="uid://dr2eycs2n6ki4" path="res://Hud/hudingame.gd" id="1_53xyk"]
+[ext_resource type="PackedScene" uid="uid://bto1msf7gd3xj" path="res://Hud/karte.tscn" id="2_icyxn"]
 
 [node name="Hudingame" type="CanvasLayer" unique_id=1188638444]
 script = ExtResource("1_53xyk")
@@ -57,7 +58,7 @@ theme_override_font_sizes/font_size = 8
 text = "START"
 icon_alignment = 1
 
-[node name="Control" type="Control" parent="mainwindow/HUD" unique_id=232882606]
+[node name="stats" type="Control" parent="mainwindow/HUD" unique_id=232882606]
 layout_mode = 1
 anchor_left = 0.809
 anchor_top = 0.042000003
@@ -68,7 +69,7 @@ offset_top = -0.007999659
 offset_right = -0.040039063
 offset_bottom = 0.00799942
 
-[node name="aktuellerunde" type="Label" parent="mainwindow/HUD/Control" unique_id=674326345]
+[node name="aktuellerunde" type="Label" parent="mainwindow/HUD/stats" unique_id=674326345]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.231
@@ -83,7 +84,7 @@ size_flags_vertical = 6
 theme_override_font_sizes/font_size = 8
 text = "RUNDE: 22"
 
-[node name="punkte" type="Label" parent="mainwindow/HUD/Control" unique_id=1085903216]
+[node name="punkte" type="Label" parent="mainwindow/HUD/stats" unique_id=1085903216]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.231
@@ -98,7 +99,7 @@ size_flags_vertical = 6
 theme_override_font_sizes/font_size = 8
 text = "PUNKTE: 1000"
 
-[node name="leben" type="Label" parent="mainwindow/HUD/Control" unique_id=1584884625]
+[node name="leben" type="Label" parent="mainwindow/HUD/stats" unique_id=1584884625]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.231
@@ -112,5 +113,39 @@ offset_bottom = 7.0039997
 size_flags_vertical = 6
 theme_override_font_sizes/font_size = 8
 text = "LEBEN: 33"
+
+[node name="allekarten" type="Control" parent="mainwindow" unique_id=1409077194]
+layout_mode = 1
+anchor_left = 0.13800001
+anchor_top = 0.192
+anchor_right = 0.86200005
+anchor_bottom = 0.808
+offset_left = 0.17999268
+offset_top = -0.12000275
+offset_right = -0.18005371
+offset_bottom = 0.11999512
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="kartenanordnung" type="HBoxContainer" parent="mainwindow/allekarten" unique_id=885344359]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0020001
+anchor_bottom = 1.0
+offset_right = 0.07394409
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="karte" parent="mainwindow/allekarten/kartenanordnung" unique_id=1086450552 instance=ExtResource("2_icyxn")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="karte2" parent="mainwindow/allekarten/kartenanordnung" unique_id=1552864454 instance=ExtResource("2_icyxn")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="karte3" parent="mainwindow/allekarten/kartenanordnung" unique_id=2131803338 instance=ExtResource("2_icyxn")]
+layout_mode = 2
+size_flags_horizontal = 3
 
 [connection signal="pressed" from="mainwindow/HUD/startbereich/Start" to="." method="_on_start_pressed"]

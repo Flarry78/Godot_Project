@@ -38,10 +38,12 @@ var darfbauen : bool = false
 ### -----------------------------------
 
 func _ready() -> void:
+	
 	randomize()
 	lademap()
 	Globalknoten.starttheround.connect(roundstart)
 	Globalknoten.turmwegstart.connect(machweg)
+	
 	pass
 
 
@@ -64,17 +66,21 @@ func roundstart():
 		finale()
 		return
 	
+	if Globalknoten.kartegewahlt == false and Globalknoten.aktuelle_runde >= 2:
+		print("wähle eine karte")
+		return
+	
 	Globalknoten.rundelauft = true
 	Globalknoten.gegnerkommen = true
 	spawntimer.start()
 	Globalknoten.bauphase = false
-	
+	print("RUNDE: " + str(Globalknoten.aktuelle_runde))
 	
 	pass
 
 func finale():
 	
-	print("hier kommt das finale")
+	print("FINALE")
 	Globalknoten.rundelauft = true
 	Globalknoten.gegnerkommen = true
 	spawntimer.start()
@@ -103,7 +109,6 @@ func _process(delta: float) -> void:
 	
 	beenderunde()
 	
-	
 	pass
 
 func machweg():
@@ -112,7 +117,6 @@ func machweg():
 	if holdghost != null:
 		holdghost.queue_free()
 		holdghost = null
-	
 	
 	pass
 
@@ -129,6 +133,7 @@ func datenanzeige() -> void:
 	
 	pass
 
+
 func beenderunde():
 	
 	if Globalknoten.rundelauft == false:
@@ -138,14 +143,17 @@ func beenderunde():
 		return
 	
 	if aktivepfade.is_empty():
+		if Globalknoten.life <= 0:
+			return
 		Globalknoten.aktuellegegner = 0
 		Globalknoten.rundelauft = false
 		Globalknoten.aktuelle_runde += 1
 		Globalknoten.emit_signal("upthud")
 		Globalknoten.bauphase = true
+		Globalknoten.kartegewahlt = false
+		Globalknoten.emit_signal("neuecards")
 	
 	pass
-
 
 
 func pfadelaufen(delta):
@@ -162,13 +170,14 @@ func pfadelaufen(delta):
 						if is_instance_valid(pfadkind):
 							pfadkind.queue_free()
 							wegdamit.append(all)
+							Globalknoten.life -= 1
+							Globalknoten.emit_signal("upthud")
 			else:
 				wegdamit.append(all)
 	
 	for wech in wegdamit:
 		aktivepfade.erase(wech)
 		wech.queue_free()
-	
 	
 	pass
 
@@ -201,7 +210,6 @@ func bautower():
 	
 	holdghost.modulate = Color(1.0, 1.0, 1.0, 1.0)
 	holdghost = null
-	
 	
 	pass
 

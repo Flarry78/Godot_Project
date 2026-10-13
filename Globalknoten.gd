@@ -34,6 +34,12 @@ var basespeed : float = 20
 signal starttheround
 @warning_ignore("unused_signal")
 signal turmwegstart
+@warning_ignore("unused_signal")
+signal kartegenommen
+@warning_ignore("unused_signal")
+signal neuecards
+
+var kartegewahlt : bool = false
 
 var aktuelle_runde : int = 1
 var maxrunde : int = 5

@@ -3,7 +3,7 @@ extends Node2D
 @onready var lifebar: ProgressBar = $lifebar
 
 @onready var speed : float = 60
-@onready var leben : float = 300
+@onready var leben : float = 3000
 
 func _ready() -> void:
 	
