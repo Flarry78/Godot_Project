@@ -42,3 +42,8 @@
 - rundenphase und finale phase sollte fehlerfrei funktionieren
 - kartenvorlage erstellt und kartenauswahl
 - bei leben verloren und spiel pausiert
+
+
+## 2026-11-02
+
+- finale runde dann wird pausiert

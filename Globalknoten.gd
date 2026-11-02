@@ -1,6 +1,7 @@
 extends Node
 
 ### gegner begrenzen und level einfügen und bauhphase und erstes HUD
+### wellen festsetzen, punkte für gegner, karten bearbeiten
 
 
 ## den index erhöht bei der visibility bei der lifebar von enemy_one

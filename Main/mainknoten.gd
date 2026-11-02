@@ -145,6 +145,10 @@ func beenderunde():
 	if aktivepfade.is_empty():
 		if Globalknoten.life <= 0:
 			return
+		if Globalknoten.finalerunde == true:
+			print("OVER")
+			get_tree().paused = true
+			return
 		Globalknoten.aktuellegegner = 0
 		Globalknoten.rundelauft = false
 		Globalknoten.aktuelle_runde += 1
